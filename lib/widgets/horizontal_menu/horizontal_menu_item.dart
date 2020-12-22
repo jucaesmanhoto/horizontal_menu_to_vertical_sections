@@ -3,21 +3,25 @@ import 'package:flutter/material.dart';
 class HorizontalMenuItem extends StatelessWidget {
   const HorizontalMenuItem({
     Key key,
-    int index,
-    bool isActive = true,
-    double indicatorTickness,
-    int indicatorWidthRelation,
-    Color inticatorColor,
-    Color baseLineColor,
-    Widget title = const Text('Menu Item'),
-    Function({int selectedIndex}) onSelect,
+    @required int index,
+    @required bool isActive, // = true,
+    @required double indicatorTickness,
+    @required Color inticatorColor,
+    @required int indicatorWidthRelationFlex,
+    @required int baseLineWidthRelationFlex,
+    @required Color baseLineColor,
+    @required double baseLineThickness,
+    @required Widget title, // = const Text('Menu Item'),
+    @required Function({int selectedIndex}) onSelect,
     @required GlobalKey menuItemKey,
     double width,
-  })  : _indicatorTickness = indicatorTickness,
-        _isActive = isActive,
-        _indicatorWidthRelation = indicatorWidthRelation,
+  })  : _isActive = isActive,
+        _indicatorWidthRelationFlex = indicatorWidthRelationFlex,
+        _baseLineWidthRelationFlex = baseLineWidthRelationFlex,
         _inticatorColor = inticatorColor,
+        _indicatorTickness = indicatorTickness,
         _baseLineColor = baseLineColor,
+        _baseLineThickness = baseLineThickness,
         _title = title,
         _onSelect = onSelect,
         _index = index,
@@ -26,10 +30,12 @@ class HorizontalMenuItem extends StatelessWidget {
         super(key: key);
 
   final bool _isActive;
-  final double _indicatorTickness;
-  final int _indicatorWidthRelation;
+  final int _indicatorWidthRelationFlex;
+  final int _baseLineWidthRelationFlex;
   final Color _inticatorColor;
+  final double _indicatorTickness;
   final Color _baseLineColor;
+  final double _baseLineThickness;
   final Widget _title;
   final Function({int selectedIndex}) _onSelect;
   final int _index;
@@ -54,26 +60,31 @@ class HorizontalMenuItem extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  Container(
+                    color: _baseLineColor,
+                    height: _baseLineThickness,
+                  ),
                   Flexible(
-                    flex: 1,
+                    flex: _baseLineWidthRelationFlex,
                     child: Container(
-                      height: 1,
+                      height: _baseLineThickness,
                       width: double.infinity,
                       color: _baseLineColor,
                     ),
                   ),
                   Flexible(
-                    flex: _indicatorWidthRelation,
+                    flex: _indicatorWidthRelationFlex,
                     child: Container(
-                      height: _isActive ? _indicatorTickness : 1,
+                      height:
+                          _isActive ? _indicatorTickness : _baseLineThickness,
                       width: double.infinity,
                       color: _isActive ? _inticatorColor : _baseLineColor,
                     ),
                   ),
                   Flexible(
-                    flex: 1,
+                    flex: _baseLineWidthRelationFlex,
                     child: Container(
-                      height: 1,
+                      height: _baseLineThickness,
                       width: double.infinity,
                       color: _baseLineColor,
                     ),

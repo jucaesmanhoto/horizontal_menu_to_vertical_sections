@@ -13,17 +13,23 @@ class HorizontalList extends StatelessWidget {
     final Color baseLineColor,
     final Color inticatorColor,
     final double indicatorThickness,
-    final int indicatorWidthRelation,
+    final double baseLineThickness,
+    final int indicatorWidthRelationFlex,
+    final int itemBaseLineWidthRelationFlex,
+    final double horizontalPadding,
     Function({int selectedIndex}) onHorizontalMenuItemSelect,
   })  : _baseLineColor = baseLineColor,
         _inticatorColor = inticatorColor,
         _indicatorThickness = indicatorThickness,
-        _indicatorWidthRelation = indicatorWidthRelation,
+        _indicatorWidthRelation = indicatorWidthRelationFlex,
         _menuItemWidth = menuItemWidth,
         _controller = controller,
         _onHorizontalMenuItemSelect = onHorizontalMenuItemSelect,
         _sections = sections,
         _selectedIndex = selectedIndex,
+        _baseLineThickness = baseLineThickness,
+        _horizontalPadding = horizontalPadding,
+        _itemBaseLineWidthRelationFlex = itemBaseLineWidthRelationFlex,
         super(key: key);
 
   final double _menuItemWidth;
@@ -32,9 +38,12 @@ class HorizontalList extends StatelessWidget {
   final List<SectionModel> _sections;
   final int _selectedIndex;
   final Color _baseLineColor;
+  final double _baseLineThickness;
   final Color _inticatorColor;
   final double _indicatorThickness;
   final int _indicatorWidthRelation;
+  final double _horizontalPadding;
+  final int _itemBaseLineWidthRelationFlex;
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +51,42 @@ class HorizontalList extends StatelessWidget {
       child: SingleChildScrollView(
         controller: _controller,
         scrollDirection: Axis.horizontal,
-        child: Row(
-          children: _sections.map((section) {
-            return Container(
-              width: _menuItemWidth,
-              child: HorizontalMenuItem(
-                index: _sections.indexOf(section),
-                menuItemKey: section.menuItemKey,
-                title: section.horizontalMenuTitle,
-                onSelect: ({int selectedIndex}) {
-                  _onHorizontalMenuItemSelect(selectedIndex: selectedIndex);
-                },
-                isActive: _selectedIndex == _sections.indexOf(section),
-                baseLineColor: _baseLineColor,
-                indicatorTickness: _indicatorThickness,
-                indicatorWidthRelation: _indicatorWidthRelation,
-                inticatorColor: _inticatorColor,
+        child: Container(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                height: _baseLineThickness,
+                width: _horizontalPadding,
+                color: _baseLineColor,
               ),
-            );
-          }).toList(),
+              ..._sections.map((section) {
+                return Container(
+                  width: _menuItemWidth,
+                  child: HorizontalMenuItem(
+                    index: _sections.indexOf(section),
+                    menuItemKey: section.menuItemKey,
+                    title: section.horizontalMenuTitle,
+                    onSelect: ({int selectedIndex}) {
+                      _onHorizontalMenuItemSelect(selectedIndex: selectedIndex);
+                    },
+                    isActive: _selectedIndex == _sections.indexOf(section),
+                    baseLineColor: _baseLineColor,
+                    baseLineThickness: _baseLineThickness,
+                    indicatorTickness: _indicatorThickness,
+                    baseLineWidthRelationFlex: _itemBaseLineWidthRelationFlex,
+                    indicatorWidthRelationFlex: _indicatorWidthRelation,
+                    inticatorColor: _inticatorColor,
+                  ),
+                );
+              }).toList(),
+              Container(
+                height: _baseLineThickness,
+                width: _horizontalPadding,
+                color: _baseLineColor,
+              ),
+            ],
+          ),
         ),
       ),
     );

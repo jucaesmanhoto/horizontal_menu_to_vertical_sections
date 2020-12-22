@@ -12,22 +12,28 @@ class CombinedMenu extends StatefulWidget {
   final int horizontalScrollDurationInMilliseconds;
   final int verticalScrollDurationInMilliseconds;
   final Color baseLineColor;
+  final double baseLineThickness;
   final Color inticatorColor;
   final double indicatorThickness;
-  final int indicatorWidthRelation;
+  final int indicatorWidthRelationFlex;
+  final int itemBaseLineWidthRelationFlex;
+  final double horizontalPadding;
 
   const CombinedMenu({
     Key key,
     this.baseLineColor = Colors.black26,
+    this.baseLineThickness = 1.0,
     this.inticatorColor = Colors.black,
     this.indicatorThickness = 2.0,
-    this.indicatorWidthRelation = 3,
+    this.indicatorWidthRelationFlex = 3,
     this.sections,
     this.menuItemWidth = 80.0,
-    this.height = 611,
-    this.width = 375,
+    this.height, // = 611,
+    this.width, // = 375,
     this.horizontalScrollDurationInMilliseconds = 250,
     this.verticalScrollDurationInMilliseconds = 350,
+    this.itemBaseLineWidthRelationFlex = 1,
+    this.horizontalPadding,
   }) : super(key: key);
 
   @override
@@ -47,6 +53,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _getVerticalPositions();
       _getHorizontalPositions();
+      final test =
+          widget.sections[6].menuItemKey.currentContext.findRenderObject();
+      print(test);
       _verticalScroll.addListener(_addVerticalScrollListeners);
     });
   }
@@ -66,9 +75,13 @@ class _CombinedMenuState extends State<CombinedMenu> {
               menuItemWidth: widget.menuItemWidth,
               sections: widget.sections,
               baseLineColor: widget.baseLineColor,
+              baseLineThickness: widget.baseLineThickness,
               inticatorColor: widget.inticatorColor,
               indicatorThickness: widget.indicatorThickness,
-              indicatorWidthRelation: widget.indicatorWidthRelation,
+              indicatorWidthRelationFlex: widget.indicatorWidthRelationFlex,
+              itemBaseLineWidthRelationFlex:
+                  widget.itemBaseLineWidthRelationFlex,
+              horizontalPadding: widget.horizontalPadding,
               onHorizontalMenuItemSelect: ({int selectedIndex}) {
                 setState(() {
                   _selectedIndex = selectedIndex;
@@ -159,7 +172,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
 
   void _scrollMenuHorizontally({int index}) {
     int totalItems = widget.sections.length;
-    int visibleItems = (widget.width / widget.menuItemWidth).floor();
+    int visibleItems =
+        ((widget.width - widget.horizontalPadding) / widget.menuItemWidth)
+            .floor();
 
     if (index == 0) {
       _horizontalScroll.animateTo(
@@ -170,7 +185,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
       );
     } else if (index == totalItems - 1) {
       _horizontalScroll.animateTo(
-        (totalItems * widget.menuItemWidth) - widget.width,
+        (totalItems * widget.menuItemWidth) -
+            widget.width +
+            widget.horizontalPadding,
         duration: Duration(
             milliseconds: widget.horizontalScrollDurationInMilliseconds),
         curve: Curves.linear,

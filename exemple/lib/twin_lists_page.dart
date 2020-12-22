@@ -12,11 +12,11 @@ class TwinListsPage extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         horizontalScrollDurationInMilliseconds: 100,
         verticalScrollDurationInMilliseconds: 300,
-        // menuItemWidth: 96.0,
-        baseLineColor: Colors.red[200],
-        inticatorColor: Colors.red,
-        indicatorThickness: 2,
-        indicatorWidthRelation: 1,
+        baseLineColor: Colors.black26,
+        inticatorColor: Colors.black,
+        horizontalPadding: 16.0,
+        indicatorWidthRelationFlex: 2,
+        itemBaseLineWidthRelationFlex: 3,
       ),
     );
   }
