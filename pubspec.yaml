@@ -2,7 +2,7 @@ name: horizontal_menu_to_vertical_sections
 description: A packege to implement a list of sections linked to a horizontal scrollable menu.
 version: 0.0.1
 author: Juca Esmanhoto for Olga Ri
-homepage: 
+homepage: https://github.com/jucaesmanhoto/horizontal_menu_to_vertical_sections
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
