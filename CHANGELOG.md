@@ -15,3 +15,7 @@
 ## [0.0.4] 22 December 2020
 
 * Changed the horizontalMenuTitle to horizontalSelectedMenuTitle attribute to the SectionModel, now horizontalMenuTitle is the widget when the item is not selected.
+
+## [0.0.4+1] 22 December 2020
+
+* commented out debug prints.

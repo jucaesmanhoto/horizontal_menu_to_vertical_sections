@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'horizontal_menu/horizontal_list.dart';
-import 'vertical_sections/section_model.dart';
-import 'vertical_sections/vertical_list.dart';
+import 'widgets/horizontal_menu/horizontal_list.dart';
+import 'widgets/vertical_sections/section_model.dart';
+import 'widgets/vertical_sections/vertical_list.dart';
 
 class CombinedMenu extends StatefulWidget {
   final List<SectionModel> sections;
@@ -137,7 +137,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
                 (_initialVerticalPositions[i + 1] -
                     _initialVerticalPositions[0]) &&
             _selectedIndex != i) {
-          print('section $i');
+          // print('section $i');
           setState(() {
             _selectedIndex = i;
           });
@@ -147,7 +147,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
         if (_verticalScroll.offset >
                 (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
             _selectedIndex != i) {
-          print('section $i');
+          // print('section $i');
           setState(() {
             _selectedIndex = i;
           });
@@ -160,7 +160,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
             _verticalScroll.offset >
                 (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
             _selectedIndex != i) {
-          print('section $i');
+          // print('section $i');
           setState(() {
             _selectedIndex = i;
           });
