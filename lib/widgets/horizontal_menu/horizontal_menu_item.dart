@@ -12,6 +12,7 @@ class HorizontalMenuItem extends StatelessWidget {
     @required Color baseLineColor,
     @required double baseLineThickness,
     @required Widget title, // = const Text('Menu Item'),
+    Widget activeTitle, // = const Text('Menu Item'),
     @required Function({int selectedIndex}) onSelect,
     @required GlobalKey menuItemKey,
     double width,
@@ -26,6 +27,7 @@ class HorizontalMenuItem extends StatelessWidget {
         _onSelect = onSelect,
         _index = index,
         _menuItemKey = menuItemKey,
+        _activeTitle = activeTitle,
         _width = width,
         super(key: key);
 
@@ -37,6 +39,7 @@ class HorizontalMenuItem extends StatelessWidget {
   final Color _baseLineColor;
   final double _baseLineThickness;
   final Widget _title;
+  final Widget _activeTitle;
   final Function({int selectedIndex}) _onSelect;
   final int _index;
   final GlobalKey _menuItemKey;
@@ -53,7 +56,7 @@ class HorizontalMenuItem extends StatelessWidget {
         width: _width,
         child: Column(
           children: [
-            _title,
+            _isActive ? (_activeTitle ?? _title) : _title,
             SizedBox(height: 12.0),
             Container(
               height: _indicatorTickness,

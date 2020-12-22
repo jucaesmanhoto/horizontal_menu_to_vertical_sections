@@ -54,7 +54,8 @@ List<SectionModel> mockedSections = [
   SectionModel(
     sectionIndex: 1,
     sectionHeader: Text('Section 1'),
-    horizontalMenuTitle: Text('Section 1'),
+    horizontalelectedMenuTitle: Text('Section 1'),
+    horizontalMenuTitle: Text('Unselected'),
     sectionItems: mockedItems,
   ),
   SectionModel(
