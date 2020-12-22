@@ -4,16 +4,24 @@ import 'horizontal_menu/horizontal_list.dart';
 import 'vertical_sections/section_model.dart';
 import 'vertical_sections/vertical_list.dart';
 
-class MainWidget extends StatefulWidget {
+class CombinedMenu extends StatefulWidget {
   final List<SectionModel> sections;
   final double menuItemWidth;
   final double height;
   final double width;
   final int horizontalScrollDurationInMilliseconds;
   final int verticalScrollDurationInMilliseconds;
+  final Color baseLineColor;
+  final Color inticatorColor;
+  final double indicatorThickness;
+  final int indicatorWidthRelation;
 
-  const MainWidget({
+  const CombinedMenu({
     Key key,
+    this.baseLineColor = Colors.black26,
+    this.inticatorColor = Colors.black,
+    this.indicatorThickness = 2.0,
+    this.indicatorWidthRelation = 3,
     this.sections,
     this.menuItemWidth = 80.0,
     this.height = 611,
@@ -23,10 +31,10 @@ class MainWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MainWidgetState createState() => _MainWidgetState();
+  _CombinedMenuState createState() => _CombinedMenuState();
 }
 
-class _MainWidgetState extends State<MainWidget> {
+class _CombinedMenuState extends State<CombinedMenu> {
   final ScrollController _verticalScroll = ScrollController();
   final ScrollController _horizontalScroll = ScrollController();
   final List<double> _initialVerticalPositions = [];
@@ -57,6 +65,10 @@ class _MainWidgetState extends State<MainWidget> {
               controller: _horizontalScroll,
               menuItemWidth: widget.menuItemWidth,
               sections: widget.sections,
+              baseLineColor: widget.baseLineColor,
+              inticatorColor: widget.inticatorColor,
+              indicatorThickness: widget.indicatorThickness,
+              indicatorWidthRelation: widget.indicatorWidthRelation,
               onHorizontalMenuItemSelect: ({int selectedIndex}) {
                 setState(() {
                   _selectedIndex = selectedIndex;

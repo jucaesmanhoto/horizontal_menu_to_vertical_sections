@@ -5,13 +5,14 @@ class HorizontalMenuItem extends StatelessWidget {
     Key key,
     int index,
     bool isActive = true,
-    double indicatorTickness = 2.0,
-    int indicatorWidthRelation = 2,
-    Color inticatorColor = Colors.black,
-    Color baseLineColor = Colors.black26,
+    double indicatorTickness,
+    int indicatorWidthRelation,
+    Color inticatorColor,
+    Color baseLineColor,
     Widget title = const Text('Menu Item'),
     Function({int selectedIndex}) onSelect,
     @required GlobalKey menuItemKey,
+    double width,
   })  : _indicatorTickness = indicatorTickness,
         _isActive = isActive,
         _indicatorWidthRelation = indicatorWidthRelation,
@@ -21,6 +22,7 @@ class HorizontalMenuItem extends StatelessWidget {
         _onSelect = onSelect,
         _index = index,
         _menuItemKey = menuItemKey,
+        _width = width,
         super(key: key);
 
   final bool _isActive;
@@ -32,6 +34,7 @@ class HorizontalMenuItem extends StatelessWidget {
   final Function({int selectedIndex}) _onSelect;
   final int _index;
   final GlobalKey _menuItemKey;
+  final double _width;
 
   @override
   Widget build(BuildContext context) {
@@ -40,43 +43,46 @@ class HorizontalMenuItem extends StatelessWidget {
       onTap: () {
         _onSelect(selectedIndex: _index);
       },
-      child: Column(
-        children: [
-          _title,
-          SizedBox(height: 12.0),
-          Container(
-            height: _indicatorTickness,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: _baseLineColor,
+      child: Container(
+        width: _width,
+        child: Column(
+          children: [
+            _title,
+            SizedBox(height: 12.0),
+            Container(
+              height: _indicatorTickness,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: _baseLineColor,
+                    ),
                   ),
-                ),
-                Flexible(
-                  flex: _indicatorWidthRelation,
-                  child: Container(
-                    height: _isActive ? _indicatorTickness : 1,
-                    width: double.infinity,
-                    color: _isActive ? _inticatorColor : _baseLineColor,
+                  Flexible(
+                    flex: _indicatorWidthRelation,
+                    child: Container(
+                      height: _isActive ? _indicatorTickness : 1,
+                      width: double.infinity,
+                      color: _isActive ? _inticatorColor : _baseLineColor,
+                    ),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: _baseLineColor,
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: _baseLineColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
