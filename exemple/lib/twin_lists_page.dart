@@ -15,8 +15,8 @@ class TwinListsPage extends StatelessWidget {
         baseLineColor: Colors.black26,
         inticatorColor: Colors.black,
         horizontalPadding: 16.0,
-        indicatorWidthRelationFlex: 2,
-        itemBaseLineWidthRelationFlex: 3,
+        indicatorWidthRelationFlex: 3,
+        itemBaseLineWidthRelationFlex: 4,
       ),
     );
   }
