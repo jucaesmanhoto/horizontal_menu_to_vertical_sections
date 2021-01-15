@@ -19,3 +19,15 @@
 ## [0.0.4+1] 22 December 2020
 
 * commented out debug prints.
+
+## [0.0.5] 06 January 2021
+
+* implements a verticalContentPadding attibute (dafault value set to 0.0).
+
+## [0.0.5+1] 06 January 2021
+
+* Remove the black backgroound.
+
+## [0.0.5+2 ] 15 January 2021
+
+* fix a tiny little bug.

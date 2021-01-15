@@ -8,12 +8,15 @@ class VerticalSectionList extends StatelessWidget {
     Key key,
     List<SectionModel> sections,
     @required ScrollController controller,
+    @required double verticalContentPadding,
   })  : _sections = sections,
         _controller = controller,
+        _verticalContentPadding = verticalContentPadding,
         super(key: key);
 
   final ScrollController _controller;
   final List<SectionModel> _sections;
+  final double _verticalContentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class VerticalSectionList extends StatelessWidget {
           children: _sections.map((section) {
             return Section(
               section: section,
+              verticalContentPadding: _verticalContentPadding,
             );
           }).toList(),
         ),

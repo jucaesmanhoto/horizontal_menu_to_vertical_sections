@@ -18,6 +18,7 @@ class CombinedMenu extends StatefulWidget {
   final int indicatorWidthRelationFlex;
   final int itemBaseLineWidthRelationFlex;
   final double horizontalPadding;
+  final double verticalContentPadding;
 
   const CombinedMenu({
     Key key,
@@ -33,7 +34,8 @@ class CombinedMenu extends StatefulWidget {
     this.horizontalScrollDurationInMilliseconds = 250,
     this.verticalScrollDurationInMilliseconds = 350,
     this.itemBaseLineWidthRelationFlex = 1,
-    this.horizontalPadding,
+    this.horizontalPadding = 0.0,
+    this.verticalContentPadding = 0.0,
   }) : super(key: key);
 
   @override
@@ -53,9 +55,6 @@ class _CombinedMenuState extends State<CombinedMenu> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _getVerticalPositions();
       _getHorizontalPositions();
-      final test =
-          widget.sections[6].menuItemKey.currentContext.findRenderObject();
-      print(test);
       _verticalScroll.addListener(_addVerticalScrollListeners);
     });
   }
@@ -101,6 +100,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
               child: VerticalSectionList(
                 sections: widget.sections,
                 controller: _verticalScroll,
+                verticalContentPadding: widget.verticalContentPadding,
               ),
             ),
           ],
