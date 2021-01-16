@@ -52,11 +52,11 @@ class _CombinedMenuState extends State<CombinedMenu> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _getVerticalPositions();
-      _getHorizontalPositions();
-      _verticalScroll.addListener(_addVerticalScrollListeners);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   _getVerticalPositions();
+    //   _getHorizontalPositions();
+    //   _verticalScroll.addListener(_addVerticalScrollListeners);
+    // });
   }
 
   @override
@@ -109,96 +109,96 @@ class _CombinedMenuState extends State<CombinedMenu> {
     );
   }
 
-  Offset _getRenderBoxOffset({GlobalKey elementKey}) {
-    final RenderBox renderBox = elementKey.currentContext.findRenderObject();
-    return renderBox.localToGlobal(Offset.zero);
-  }
+  // Offset _getRenderBoxOffset({GlobalKey elementKey}) {
+  //   final RenderBox renderBox = elementKey.currentContext.findRenderObject();
+  //   return renderBox.localToGlobal(Offset.zero);
+  // }
 
-  void _getVerticalPositions() {
-    widget.sections.forEach((section) {
-      _initialVerticalPositions
-          .add(_getRenderBoxOffset(elementKey: section.sectionKey).distance);
-    });
-    print(_initialVerticalPositions);
-  }
+  // void _getVerticalPositions() {
+  //   widget.sections.forEach((section) {
+  //     _initialVerticalPositions
+  //         .add(_getRenderBoxOffset(elementKey: section.sectionKey).distance);
+  //   });
+  //   print(_initialVerticalPositions);
+  // }
 
-  void _getHorizontalPositions() {
-    widget.sections.forEach((section) {
-      _initialHorizontalPositions
-          .add(_getRenderBoxOffset(elementKey: section.menuItemKey).distance);
-    });
-    print(_initialHorizontalPositions);
-  }
+  // void _getHorizontalPositions() {
+  //   widget.sections.forEach((section) {
+  //     _initialHorizontalPositions
+  //         .add(_getRenderBoxOffset(elementKey: section.menuItemKey).distance);
+  //   });
+  //   print(_initialHorizontalPositions);
+  // }
 
-  void _addVerticalScrollListeners() {
-    for (var i = 0; i < widget.sections.length; i++) {
-      if (i == 0) {
-        if (_verticalScroll.offset <
-                (_initialVerticalPositions[i + 1] -
-                    _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      } else if (i == widget.sections.length - 1) {
-        if (_verticalScroll.offset >
-                (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      } else {
-        if (_verticalScroll.offset <
-                (_initialVerticalPositions[i + 1] -
-                    _initialVerticalPositions[0]) &&
-            _verticalScroll.offset >
-                (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      }
-    }
-  }
+  // void _addVerticalScrollListeners() {
+  //   for (var i = 0; i < widget.sections.length; i++) {
+  //     if (i == 0) {
+  //       if (_verticalScroll.offset <
+  //               (_initialVerticalPositions[i + 1] -
+  //                   _initialVerticalPositions[0]) &&
+  //           _selectedIndex != i) {
+  //         // print('section $i');
+  //         setState(() {
+  //           _selectedIndex = i;
+  //         });
+  //         _scrollMenuHorizontally(index: i);
+  //       }
+  //     } else if (i == widget.sections.length - 1) {
+  //       if (_verticalScroll.offset >
+  //               (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
+  //           _selectedIndex != i) {
+  //         // print('section $i');
+  //         setState(() {
+  //           _selectedIndex = i;
+  //         });
+  //         _scrollMenuHorizontally(index: i);
+  //       }
+  //     } else {
+  //       if (_verticalScroll.offset <
+  //               (_initialVerticalPositions[i + 1] -
+  //                   _initialVerticalPositions[0]) &&
+  //           _verticalScroll.offset >
+  //               (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
+  //           _selectedIndex != i) {
+  //         // print('section $i');
+  //         setState(() {
+  //           _selectedIndex = i;
+  //         });
+  //         _scrollMenuHorizontally(index: i);
+  //       }
+  //     }
+  //   }
+  // }
 
-  void _scrollMenuHorizontally({int index}) {
-    int totalItems = widget.sections.length;
-    int visibleItems =
-        ((widget.width - widget.horizontalPadding) / widget.menuItemWidth)
-            .floor();
+  // void _scrollMenuHorizontally({int index}) {
+  //   int totalItems = widget.sections.length;
+  //   int visibleItems =
+  //       ((widget.width - widget.horizontalPadding) / widget.menuItemWidth)
+  //           .floor();
 
-    if (index == 0) {
-      _horizontalScroll.animateTo(
-        0.0,
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    } else if (index == totalItems - 1) {
-      _horizontalScroll.animateTo(
-        (totalItems * widget.menuItemWidth) -
-            widget.width +
-            widget.horizontalPadding,
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    } else if (index + 1 > visibleItems) {
-      _horizontalScroll.animateTo(
-        widget.menuItemWidth * (index + 1 - visibleItems),
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    }
-  }
+  //   if (index == 0) {
+  //     _horizontalScroll.animateTo(
+  //       0.0,
+  //       duration: Duration(
+  //           milliseconds: widget.horizontalScrollDurationInMilliseconds),
+  //       curve: Curves.linear,
+  //     );
+  //   } else if (index == totalItems - 1) {
+  //     _horizontalScroll.animateTo(
+  //       (totalItems * widget.menuItemWidth) -
+  //           widget.width +
+  //           widget.horizontalPadding,
+  //       duration: Duration(
+  //           milliseconds: widget.horizontalScrollDurationInMilliseconds),
+  //       curve: Curves.linear,
+  //     );
+  //   } else if (index + 1 > visibleItems) {
+  //     _horizontalScroll.animateTo(
+  //       widget.menuItemWidth * (index + 1 - visibleItems),
+  //       duration: Duration(
+  //           milliseconds: widget.horizontalScrollDurationInMilliseconds),
+  //       curve: Curves.linear,
+  //     );
+  //   }
+  // }
 }

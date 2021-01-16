@@ -23,14 +23,26 @@ class VerticalSectionList extends StatelessWidget {
     return Container(
       child: SingleChildScrollView(
         controller: _controller,
-        child: Column(
-          children: _sections.map((section) {
-            return Section(
-              section: section,
-              verticalContentPadding: _verticalContentPadding,
-            );
-          }).toList(),
-        ),
+        child: Column(children: [
+          Section(),
+          Container(
+            height: 300,
+            width: 200,
+            color: Colors.red,
+          ),
+          Container(
+            height: 300,
+            width: 200,
+            color: Colors.blue,
+          )
+        ]
+            // _sections.map((section) {
+            //   return Section(
+            //     section: section,
+            //     verticalContentPadding: _verticalContentPadding,
+            //   );
+            // }).toList(),
+            ),
       ),
     );
   }
