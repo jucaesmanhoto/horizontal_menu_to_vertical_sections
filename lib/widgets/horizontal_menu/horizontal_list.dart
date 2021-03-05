@@ -67,7 +67,7 @@ class HorizontalList extends StatelessWidget {
                     index: _sections.indexOf(section),
                     menuItemKey: section.menuItemKey,
                     title: section.horizontalMenuTitle,
-                    activeTitle: section.horizontalelectedMenuTitle,
+                    activeTitle: section.horizontalSelectedMenuTitle,
                     onSelect: ({int selectedIndex}) {
                       _onHorizontalMenuItemSelect(selectedIndex: selectedIndex);
                     },
