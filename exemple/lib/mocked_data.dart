@@ -44,7 +44,7 @@ List<SectionModel> mockedSections = List.generate(
               style: TextStyle(color: Colors.black26),
             ),
           ),
-          horizontalelectedMenuTitle: Container(
+          horizontalSelectedMenuTitle: Container(
             padding: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black26),
