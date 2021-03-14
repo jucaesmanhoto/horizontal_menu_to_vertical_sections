@@ -171,34 +171,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
   }
 
   void _scrollMenuHorizontally({int index}) {
-    int totalItems = widget.sections.length;
-    int visibleItems =
-        ((widget.width - widget.horizontalPadding) / widget.menuItemWidth)
-            .floor();
-
-    if (index == 0) {
-      _horizontalScroll.animateTo(
-        0.0,
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    } else if (index == totalItems - 1) {
-      _horizontalScroll.animateTo(
-        (totalItems * widget.menuItemWidth) -
-            widget.width +
-            widget.horizontalPadding,
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    } else if (index + 1 > visibleItems) {
-      _horizontalScroll.animateTo(
-        widget.menuItemWidth * (index + 1 - visibleItems),
-        duration: Duration(
-            milliseconds: widget.horizontalScrollDurationInMilliseconds),
-        curve: Curves.linear,
-      );
-    }
+    List<GlobalKey> horizontalItems = widget.sections.map((section) => section.menuItemKey).toList();
+    Scrollable.ensureVisible(horizontalItems[index].currentContext);
   }
 }
