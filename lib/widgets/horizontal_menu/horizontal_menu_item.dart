@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 class HorizontalMenuItem extends StatelessWidget {
   const HorizontalMenuItem({
-    Key key,
-    @required int index,
-    @required bool isActive, // = true,
-    @required double indicatorTickness,
-    @required Color inticatorColor,
-    @required int indicatorWidthRelationFlex,
-    @required int baseLineWidthRelationFlex,
-    @required Color baseLineColor,
-    @required double baseLineThickness,
-    @required Widget title, // = const Text('Menu Item'),
-    Widget activeTitle, // = const Text('Menu Item'),
-    @required Function({int selectedIndex}) onSelect,
-    @required GlobalKey menuItemKey,
-    double width,
+    Key? key,
+    required int index,
+    required bool isActive, // = true,
+    required double indicatorTickness,
+    required Color inticatorColor,
+    required int indicatorWidthRelationFlex,
+    required int baseLineWidthRelationFlex,
+    required Color baseLineColor,
+    required double baseLineThickness,
+    required Widget title, // = const Text('Menu Item'),
+    Widget? activeTitle, // = const Text('Menu Item'),
+    required Function({required int selectedIndex}) onSelect,
+    required GlobalKey menuItemKey,
+    double? width,
   })  : _isActive = isActive,
         _indicatorWidthRelationFlex = indicatorWidthRelationFlex,
         _baseLineWidthRelationFlex = baseLineWidthRelationFlex,
@@ -39,13 +39,12 @@ class HorizontalMenuItem extends StatelessWidget {
   final Color _baseLineColor;
   final double _baseLineThickness;
   final Widget _title;
-  final Widget _activeTitle;
-  final Function({int selectedIndex}) _onSelect;
+  final Widget? _activeTitle;
+  final Function({required int selectedIndex}) _onSelect;
   final int _index;
   final GlobalKey _menuItemKey;
-  final double _width;
+  final double? _width;
 
-  @override
   Widget build(BuildContext context) {
     return InkWell(
       key: _menuItemKey,

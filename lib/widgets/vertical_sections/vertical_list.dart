@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../models/section_model.dart';
 import 'section.dart';
-import 'section_model.dart';
 
 class VerticalSectionList extends StatelessWidget {
   const VerticalSectionList({
-    Key key,
-    List<SectionModel> sections,
-    @required ScrollController controller,
-    @required double verticalContentPadding,
-  })  : _sections = sections,
+    Key? key,
+    required List<SectionModel> sections,
+    required ScrollController controller,
+    required double verticalContentPadding,
+  })   : _sections = sections,
         _controller = controller,
         _verticalContentPadding = verticalContentPadding,
         super(key: key);
