@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'models/section_model.dart';
 import 'widgets/horizontal_menu/horizontal_list.dart';
-import 'widgets/vertical_sections/section_model.dart';
 import 'widgets/vertical_sections/vertical_list.dart';
 
 class CombinedMenu extends StatefulWidget {
@@ -21,16 +21,16 @@ class CombinedMenu extends StatefulWidget {
   final double verticalContentPadding;
 
   const CombinedMenu({
-    Key key,
+    Key? key,
     this.baseLineColor = Colors.black26,
     this.baseLineThickness = 1.0,
     this.inticatorColor = Colors.black,
     this.indicatorThickness = 2.0,
     this.indicatorWidthRelationFlex = 3,
-    this.sections,
+    required this.sections,
     this.menuItemWidth = 80.0,
-    this.height, // = 611,
-    this.width, // = 375,
+    required this.height, // = 611,
+    required this.width, // = 375,
     this.horizontalScrollDurationInMilliseconds = 250,
     this.verticalScrollDurationInMilliseconds = 350,
     this.itemBaseLineWidthRelationFlex = 1,
@@ -52,7 +52,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       _getVerticalPositions();
       _getHorizontalPositions();
       _verticalScroll.addListener(_addVerticalScrollListeners);
@@ -81,7 +81,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
               itemBaseLineWidthRelationFlex:
                   widget.itemBaseLineWidthRelationFlex,
               horizontalPadding: widget.horizontalPadding,
-              onHorizontalMenuItemSelect: ({int selectedIndex}) {
+              onHorizontalMenuItemSelect: ({required int selectedIndex}) {
                 setState(() {
                   _selectedIndex = selectedIndex;
                 });
@@ -109,8 +109,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
     );
   }
 
-  Offset _getRenderBoxOffset({GlobalKey elementKey}) {
-    final RenderBox renderBox = elementKey.currentContext.findRenderObject();
+  Offset _getRenderBoxOffset({required GlobalKey elementKey}) {
+    final RenderBox renderBox =
+        elementKey.currentContext!.findRenderObject() as RenderBox;
     return renderBox.localToGlobal(Offset.zero);
   }
 
@@ -170,8 +171,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
     }
   }
 
-  void _scrollMenuHorizontally({int index}) {
-    List<GlobalKey> horizontalItems = widget.sections.map((section) => section.menuItemKey).toList();
-    Scrollable.ensureVisible(horizontalItems[index].currentContext);
+  void _scrollMenuHorizontally({required int index}) {
+    List<GlobalKey> horizontalItems =
+        widget.sections.map((section) => section.menuItemKey).toList();
+    Scrollable.ensureVisible(horizontalItems[index].currentContext!);
   }
 }

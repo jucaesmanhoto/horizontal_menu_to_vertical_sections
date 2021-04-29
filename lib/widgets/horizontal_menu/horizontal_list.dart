@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../vertical_sections/section_model.dart';
+import '../../models/section_model.dart';
 import 'horizontal_menu_item.dart';
 
 class HorizontalList extends StatelessWidget {
   const HorizontalList({
-    Key key,
-    @required double menuItemWidth,
-    @required List<SectionModel> sections,
-    @required ScrollController controller,
-    @required int selectedIndex,
-    final Color baseLineColor,
-    final Color inticatorColor,
-    final double indicatorThickness,
-    final double baseLineThickness,
-    final int indicatorWidthRelationFlex,
-    final int itemBaseLineWidthRelationFlex,
-    final double horizontalPadding,
-    Function({int selectedIndex}) onHorizontalMenuItemSelect,
+    Key? key,
+    required double menuItemWidth,
+    required List<SectionModel> sections,
+    required ScrollController controller,
+    required int selectedIndex,
+    final Color? baseLineColor,
+    final Color? inticatorColor,
+    final double? indicatorThickness,
+    final double? baseLineThickness,
+    final int? indicatorWidthRelationFlex,
+    final int? itemBaseLineWidthRelationFlex,
+    final double? horizontalPadding,
+    Function({required int selectedIndex})? onHorizontalMenuItemSelect,
   })  : _baseLineColor = baseLineColor,
         _inticatorColor = inticatorColor,
         _indicatorThickness = indicatorThickness,
@@ -34,16 +34,16 @@ class HorizontalList extends StatelessWidget {
 
   final double _menuItemWidth;
   final ScrollController _controller;
-  final Function({int selectedIndex}) _onHorizontalMenuItemSelect;
+  final Function({required int selectedIndex})? _onHorizontalMenuItemSelect;
   final List<SectionModel> _sections;
   final int _selectedIndex;
-  final Color _baseLineColor;
-  final double _baseLineThickness;
-  final Color _inticatorColor;
-  final double _indicatorThickness;
-  final int _indicatorWidthRelation;
-  final double _horizontalPadding;
-  final int _itemBaseLineWidthRelationFlex;
+  final Color? _baseLineColor;
+  final double? _baseLineThickness;
+  final Color? _inticatorColor;
+  final double? _indicatorThickness;
+  final int? _indicatorWidthRelation;
+  final double? _horizontalPadding;
+  final int? _itemBaseLineWidthRelationFlex;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +68,10 @@ class HorizontalList extends StatelessWidget {
                     menuItemKey: section.menuItemKey,
                     title: section.horizontalMenuTitle,
                     activeTitle: section.horizontalSelectedMenuTitle,
-                    onSelect: ({int selectedIndex}) {
-                      _onHorizontalMenuItemSelect(selectedIndex: selectedIndex);
+                    onSelect: ({required int selectedIndex}) {
+                      _onHorizontalMenuItemSelect!(
+                        selectedIndex: selectedIndex,
+                      );
                     },
                     isActive: _selectedIndex == _sections.indexOf(section),
                     baseLineColor: _baseLineColor,

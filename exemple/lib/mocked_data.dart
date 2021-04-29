@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:horizontal_menu_to_vertical_sections/widgets/vertical_sections/section_model.dart';
+import 'package:horizontal_menu_to_vertical_sections/horizontal_menu_to_vertical_sections.dart';
 
 List<Color> colors = [
   Colors.amber,
   Colors.blue,
   Colors.cyan,
   Colors.yellow,
-  Colors.purpleAccent[100],
+  Colors.purpleAccent[100]!,
   Colors.lime,
-  Colors.brown[300],
-  Colors.green[300],
-  Colors.orange[600],
-  Colors.red[300],
+  Colors.brown[300]!,
+  Colors.green[300]!,
+  Colors.orange[600]!,
+  Colors.red[300]!,
   Colors.teal,
 ];
 

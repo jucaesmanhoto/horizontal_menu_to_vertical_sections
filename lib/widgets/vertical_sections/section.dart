@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'section_model.dart';
+import '../../models/section_model.dart';
 
 class Section extends StatelessWidget {
   const Section({
-    Key key,
-    SectionModel section,
-    GlobalKey itemKey,
+    Key? itemKey,
+    required SectionModel section,
+
     // int sectionIndex,
     List<Widget> items = const [Text('Section')],
-    Widget sectionHeader,
-    @required double verticalContentPadding,
-  })  : _section = section,
+    Widget? sectionHeader,
+    required double verticalContentPadding,
+  })   : _section = section,
         _verticalContentPadding = verticalContentPadding,
-        super(key: key);
+        super(key: itemKey);
 
   final SectionModel _section;
   final double _verticalContentPadding;
