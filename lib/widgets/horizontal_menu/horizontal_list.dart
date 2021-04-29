@@ -10,15 +10,15 @@ class HorizontalList extends StatelessWidget {
     required List<SectionModel> sections,
     required ScrollController controller,
     required int selectedIndex,
-    required final Color baseLineColor,
-    required final Color inticatorColor,
-    required final double indicatorThickness,
-    required final double baseLineThickness,
-    required final int indicatorWidthRelationFlex,
-    required final int itemBaseLineWidthRelationFlex,
-    required final double horizontalPadding,
-    required Function({required int selectedIndex}) onHorizontalMenuItemSelect,
-  })   : _baseLineColor = baseLineColor,
+    final Color? baseLineColor,
+    final Color? inticatorColor,
+    final double? indicatorThickness,
+    final double? baseLineThickness,
+    final int? indicatorWidthRelationFlex,
+    final int? itemBaseLineWidthRelationFlex,
+    final double? horizontalPadding,
+    Function({required int selectedIndex})? onHorizontalMenuItemSelect,
+  })  : _baseLineColor = baseLineColor,
         _inticatorColor = inticatorColor,
         _indicatorThickness = indicatorThickness,
         _indicatorWidthRelation = indicatorWidthRelationFlex,
@@ -34,16 +34,16 @@ class HorizontalList extends StatelessWidget {
 
   final double _menuItemWidth;
   final ScrollController _controller;
-  final Function({required int selectedIndex}) _onHorizontalMenuItemSelect;
+  final Function({required int selectedIndex})? _onHorizontalMenuItemSelect;
   final List<SectionModel> _sections;
   final int _selectedIndex;
-  final Color _baseLineColor;
-  final double _baseLineThickness;
-  final Color _inticatorColor;
-  final double _indicatorThickness;
-  final int _indicatorWidthRelation;
-  final double _horizontalPadding;
-  final int _itemBaseLineWidthRelationFlex;
+  final Color? _baseLineColor;
+  final double? _baseLineThickness;
+  final Color? _inticatorColor;
+  final double? _indicatorThickness;
+  final int? _indicatorWidthRelation;
+  final double? _horizontalPadding;
+  final int? _itemBaseLineWidthRelationFlex;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,9 @@ class HorizontalList extends StatelessWidget {
                     title: section.horizontalMenuTitle,
                     activeTitle: section.horizontalSelectedMenuTitle,
                     onSelect: ({required int selectedIndex}) {
-                      _onHorizontalMenuItemSelect(selectedIndex: selectedIndex);
+                      _onHorizontalMenuItemSelect!(
+                        selectedIndex: selectedIndex,
+                      );
                     },
                     isActive: _selectedIndex == _sections.indexOf(section),
                     baseLineColor: _baseLineColor,
