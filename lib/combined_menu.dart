@@ -60,6 +60,13 @@ class _CombinedMenuState extends State<CombinedMenu> {
   }
 
   @override
+  void dispose() {
+    _verticalScroll.dispose();
+    _horizontalScroll.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
