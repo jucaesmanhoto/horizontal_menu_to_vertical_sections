@@ -35,3 +35,4 @@
 ## [0.0.6 ] 04 August 2021
 
 * dipose the controllers
+* update exemple pubspec
