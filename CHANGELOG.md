@@ -31,3 +31,7 @@
 ## [0.0.5+2 ] 15 January 2021
 
 * fix a tiny little bug.
+
+## [0.0.6 ] 04 August 2021
+
+* dipose the controllers
