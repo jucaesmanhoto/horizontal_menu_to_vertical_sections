@@ -32,7 +32,7 @@
 
 * fix a tiny little bug.
 
-## [0.0.6] 04 August 2021
+## [0.0.7] 04 August 2021
 
 * dipose the controllers
 * update exemple pubspec

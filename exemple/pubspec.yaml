@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  horizontal_menu_to_vertical_sections: ^0.0.6
+  horizontal_menu_to_vertical_sections: ^0.0.7
   path: ^1.8.0
   flutter:
     sdk: flutter
