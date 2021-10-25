@@ -217,9 +217,9 @@ packages:
   horizontal_menu_to_vertical_sections:
     dependency: "direct main"
     description:
-      name: horizontal_menu_to_vertical_sections
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: ".."
+      relative: true
+    source: path
     version: "0.0.7"
   http_multi_server:
     dependency: transitive
@@ -375,6 +375,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  scrollable_positioned_list:
+    dependency: transitive
+    description:
+      name: scrollable_positioned_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   shelf:
     dependency: transitive
     description:
@@ -494,4 +501,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=1.13.8"

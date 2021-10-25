@@ -1,186 +1,241 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import 'models/section_model.dart';
-import 'widgets/horizontal_menu/horizontal_list.dart';
-import 'widgets/vertical_sections/vertical_list.dart';
+import 'scrollable_controller.dart';
+
+const scrollDuration = Duration(seconds: 2);
+
+//Deve receber duas listas de widgets, uma lista de items do cabeçalhos e outra lista com os items do do corpo
+//A lista do cabeçalho e a lista widgets devem ter o mesmo tamanho
 
 class CombinedMenu extends StatefulWidget {
-  final List<SectionModel> sections;
-  final double menuItemWidth;
-  final double height;
-  final double width;
-  final int horizontalScrollDurationInMilliseconds;
-  final int verticalScrollDurationInMilliseconds;
-  final Color baseLineColor;
-  final double baseLineThickness;
-  final Color inticatorColor;
-  final double indicatorThickness;
-  final int indicatorWidthRelationFlex;
-  final int itemBaseLineWidthRelationFlex;
-  final double horizontalPadding;
-  final double verticalContentPadding;
+  final List<Widget> headers;
+  final List<Widget> contents;
+  final double headerHigth;
+  final Widget selectedHeader;
 
   const CombinedMenu({
-    Key? key,
-    this.baseLineColor = Colors.black26,
-    this.baseLineThickness = 1.0,
-    this.inticatorColor = Colors.black,
-    this.indicatorThickness = 2.0,
-    this.indicatorWidthRelationFlex = 3,
-    required this.sections,
-    this.menuItemWidth = 80.0,
-    required this.height, // = 611,
-    required this.width, // = 375,
-    this.horizontalScrollDurationInMilliseconds = 250,
-    this.verticalScrollDurationInMilliseconds = 350,
-    this.itemBaseLineWidthRelationFlex = 1,
-    this.horizontalPadding = 0.0,
-    this.verticalContentPadding = 0.0,
-  }) : super(key: key);
+    required this.headerHigth,
+    required this.selectedHeader,
+    required this.headers,
+    required this.contents,
+  }) : assert(
+          headers.length == contents.length,
+          "The number of index needs to be the same of contents",
+        );
 
   @override
   _CombinedMenuState createState() => _CombinedMenuState();
 }
 
 class _CombinedMenuState extends State<CombinedMenu> {
-  final ScrollController _verticalScroll = ScrollController();
-  final ScrollController _horizontalScroll = ScrollController();
-  final List<double> _initialVerticalPositions = [];
-  final List<double> _initialHorizontalPositions = [];
-  int _selectedIndex = 0;
+  final ScrollableController scrollableController = new ScrollableController();
+
+  final rowScrollController = ScrollController();
+
+  /// Controller to scroll or jump to a particular item.
+  final ItemScrollController verticalScrollController = ItemScrollController();
+  final ItemScrollController horizontalScrollController =
+      ItemScrollController();
+
+  /// Listener that reports the position of items when the list is scrolled.
+  final ItemPositionsListener verticalItemPositionsListener =
+      ItemPositionsListener.create();
+  final ItemPositionsListener horizontalItemPositionsListener =
+      ItemPositionsListener.create();
+
+  int currentIndex = 0;
+
+  void onPositionsChange({
+    required int firstItem,
+    required int lastItem,
+  }) {
+    if (currentIndex != firstItem) {
+      currentIndex = firstItem;
+      if (canUpdate()) {
+        horizontalScrollController.jumpTo(
+          index: currentIndex,
+        );
+      }
+    }
+  }
+
+  bool canUpdate() {
+    int min = 0;
+    int max = 0;
+    final positions = horizontalItemPositionsListener.itemPositions.value;
+    if (horizontalItemPositionsListener.itemPositions.value.isNotEmpty) {
+      min = positions
+          .where((ItemPosition position) => position.itemTrailingEdge > 0)
+          .reduce((ItemPosition min, ItemPosition position) =>
+              position.itemTrailingEdge < min.itemTrailingEdge ? position : min)
+          .index;
+
+      max = positions
+          .where((ItemPosition position) => position.itemLeadingEdge < 1)
+          .reduce((ItemPosition max, ItemPosition position) =>
+              position.itemLeadingEdge > max.itemLeadingEdge ? position : max)
+          .index;
+    }
+    if (currentIndex >= min && currentIndex <= max) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _getVerticalPositions();
-      _getHorizontalPositions();
-      _verticalScroll.addListener(_addVerticalScrollListeners);
-    });
   }
 
   @override
   void dispose() {
-    _verticalScroll.dispose();
-    _horizontalScroll.dispose();
+    this.scrollableController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: widget.height,
-        width: widget.width,
+    return ValueListenableBuilder<Iterable<ItemPosition>>(
+      valueListenable: verticalItemPositionsListener.itemPositions,
+      child: Material(
         child: Column(
-          children: [
-            HorizontalList(
-              selectedIndex: _selectedIndex,
-              controller: _horizontalScroll,
-              menuItemWidth: widget.menuItemWidth,
-              sections: widget.sections,
-              baseLineColor: widget.baseLineColor,
-              baseLineThickness: widget.baseLineThickness,
-              inticatorColor: widget.inticatorColor,
-              indicatorThickness: widget.indicatorThickness,
-              indicatorWidthRelationFlex: widget.indicatorWidthRelationFlex,
-              itemBaseLineWidthRelationFlex:
-                  widget.itemBaseLineWidthRelationFlex,
-              horizontalPadding: widget.horizontalPadding,
-              onHorizontalMenuItemSelect: ({required int selectedIndex}) {
-                setState(() {
-                  _selectedIndex = selectedIndex;
-                });
-                _verticalScroll.animateTo(
-                  _initialVerticalPositions[selectedIndex] -
-                      _initialVerticalPositions[0] +
-                      1,
-                  duration: Duration(
-                      milliseconds:
-                          widget.verticalScrollDurationInMilliseconds),
-                  curve: Curves.linear,
-                );
-              },
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: widget.headerHigth,
+              child: ValueListenableBuilder<int>(
+                  valueListenable: scrollableController.valueListenable,
+                  builder: (context, snapshot, child) {
+                    return HeaderList(
+                      controller: scrollableController,
+                      numberOfItems: widget.contents.length,
+                      itemPositionsListener: horizontalItemPositionsListener,
+                      itemScrollController: horizontalScrollController,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          child: index == snapshot
+                              ? this.widget.selectedHeader
+                              : this.widget.headers[index],
+                          onTap: () => scrollTo(index),
+                        );
+
+                        // return GestureDetector(
+                        //   child: Container(
+                        //     width: 100,
+                        //     decoration: BoxDecoration(
+                        //       border: snapshot == index
+                        //           ? Border.all(color: Colors.blueAccent)
+                        //           : null,
+                        //       color: this.widget.colors[index],
+                        //     ),
+                        //     child: Center(
+                        //       child: Text(
+                        //         "$index",
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   onTap: () {
+                        //     scrollTo(index);
+                        //   },
+                        // );
+                      },
+                    );
+                  }),
             ),
-            Expanded(
-              child: VerticalSectionList(
-                sections: widget.sections,
-                controller: _verticalScroll,
-                verticalContentPadding: widget.verticalContentPadding,
-              ),
+            BodyList(
+              numberOfItems: widget.contents.length,
+              itemPositionsListener: verticalItemPositionsListener,
+              itemScrollController: verticalScrollController,
+              itemBuilder: (context, index) {
+                return widget.contents[index];
+              },
             ),
           ],
         ),
       ),
+      builder: (context, positions, child) {
+        scrollableController.updatePositions(
+          positions: positions,
+          onValueChane: onPositionsChange,
+        );
+        return child!;
+      },
     );
   }
 
-  Offset _getRenderBoxOffset({required GlobalKey elementKey}) {
-    final RenderBox renderBox =
-        elementKey.currentContext!.findRenderObject() as RenderBox;
-    return renderBox.localToGlobal(Offset.zero);
-  }
+  void scrollTo(int index) => verticalScrollController.scrollTo(
+        index: index,
+        duration: scrollDuration,
+        curve: Curves.easeInOutCubic,
+      );
+}
 
-  void _getVerticalPositions() {
-    widget.sections.forEach((section) {
-      _initialVerticalPositions
-          .add(_getRenderBoxOffset(elementKey: section.sectionKey).distance);
-    });
-    print(_initialVerticalPositions);
-  }
+class HeaderList extends StatelessWidget {
+  final ItemScrollController itemScrollController;
+  final ItemPositionsListener itemPositionsListener;
+  final IndexedWidgetBuilder itemBuilder;
+  final int numberOfItems;
+  final ScrollableController controller;
 
-  void _getHorizontalPositions() {
-    widget.sections.forEach((section) {
-      _initialHorizontalPositions
-          .add(_getRenderBoxOffset(elementKey: section.menuItemKey).distance);
-    });
-    print(_initialHorizontalPositions);
-  }
+  HeaderList({
+    Key? key,
+    required this.itemBuilder,
+    required this.controller,
+    required this.itemScrollController,
+    required this.itemPositionsListener,
+    required this.numberOfItems,
+  }) : super(key: key);
 
-  void _addVerticalScrollListeners() {
-    for (var i = 0; i < widget.sections.length; i++) {
-      if (i == 0) {
-        if (_verticalScroll.offset <
-                (_initialVerticalPositions[i + 1] -
-                    _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      } else if (i == widget.sections.length - 1) {
-        if (_verticalScroll.offset >
-                (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      } else {
-        if (_verticalScroll.offset <
-                (_initialVerticalPositions[i + 1] -
-                    _initialVerticalPositions[0]) &&
-            _verticalScroll.offset >
-                (_initialVerticalPositions[i] - _initialVerticalPositions[0]) &&
-            _selectedIndex != i) {
-          // print('section $i');
-          setState(() {
-            _selectedIndex = i;
-          });
-          _scrollMenuHorizontally(index: i);
-        }
-      }
-    }
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: ScrollablePositionedList.builder(
+        itemCount: numberOfItems,
+        scrollDirection: Axis.horizontal,
+        itemScrollController: itemScrollController,
+        itemPositionsListener: itemPositionsListener,
+        physics: RangeMaintainingScrollPhysics(),
+        itemBuilder: itemBuilder,
+      ),
+    );
   }
+}
 
-  void _scrollMenuHorizontally({required int index}) {
-    List<GlobalKey> horizontalItems =
-        widget.sections.map((section) => section.menuItemKey).toList();
-    Scrollable.ensureVisible(horizontalItems[index].currentContext!);
+class BodyList extends StatefulWidget {
+  final IndexedWidgetBuilder itemBuilder;
+  final ItemScrollController itemScrollController;
+  final ItemPositionsListener itemPositionsListener;
+  final int numberOfItems;
+
+  const BodyList({
+    Key? key,
+    required this.itemBuilder,
+    required this.numberOfItems,
+    required this.itemScrollController,
+    required this.itemPositionsListener,
+  }) : super(key: key);
+
+  @override
+  State<BodyList> createState() => _BodyListState();
+}
+
+class _BodyListState extends State<BodyList> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ScrollablePositionedList.builder(
+        initialAlignment: 12,
+        itemCount: widget.numberOfItems,
+        itemScrollController: widget.itemScrollController,
+        itemPositionsListener: widget.itemPositionsListener,
+        physics: BouncingScrollPhysics(),
+        itemBuilder: widget.itemBuilder,
+      ),
+    );
   }
 }
