@@ -11,7 +11,7 @@ class TwinListsPage extends StatelessWidget {
         contents: mockedContents,
         headers: mockedHeaders,
         selectedHeader: Container(
-          padding: const EdgeInsets.only(left: 4.0),
+          padding: const EdgeInsets.only(left: 114.0),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black26),
             borderRadius: BorderRadius.circular(5.0),
