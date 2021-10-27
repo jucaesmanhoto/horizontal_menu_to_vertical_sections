@@ -36,3 +36,7 @@
 
 * dipose the controllers
 * update exemple pubspec
+
+## [0.0.8] 27 October 2021
+
+* Remove Global key in sections
