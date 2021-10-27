@@ -8,7 +8,6 @@
 .buildlog/
 .history
 .svn/
-exemple/pubspec.lock
 
 # IntelliJ related
 *.iml
