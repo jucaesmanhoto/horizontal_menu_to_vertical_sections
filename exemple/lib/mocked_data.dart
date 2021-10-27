@@ -16,20 +16,16 @@ List<Color> colors = [
 
 List<Widget> mockedHeaders = List<Widget>.generate(
   10,
-  (index) => ConstrainedBox(
-    constraints: BoxConstraints(maxHeight: 20),
-    child: SizedBox(
-      height: 20,
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: colors[index % colors.length],
-          ),
-          padding: const EdgeInsets.all(16.0),
-          child: Text('Item $index'),
+  (index) => SizedBox(
+    child: Center(
+      child: Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: colors[index % colors.length],
         ),
+        padding: const EdgeInsets.all(6.0),
+        child: Text('Item $index'),
       ),
     ),
   ),
@@ -38,7 +34,7 @@ List<Widget> mockedHeaders = List<Widget>.generate(
 List<Widget> mockedContents = List<Widget>.generate(
   10,
   (index) => Container(
-    padding: const EdgeInsets.all(4.0),
+    margin: const EdgeInsets.all(4.0),
     height: 399,
     decoration: BoxDecoration(
       color: colors[index % colors.length],

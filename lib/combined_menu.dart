@@ -115,34 +115,17 @@ class _CombinedMenuState extends State<CombinedMenu> {
                       itemScrollController: horizontalScrollController,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          child: index == snapshot
-                              ? this.widget.selectedHeader
-                              : this.widget.headers[index],
+                          child: Column(
+                            children: [
+                              widget.headers[index],
+                              if (index == snapshot) this.widget.selectedHeader,
+                            ],
+                          ),
+                          // child: index == snapshot
+                          //     ? this.widget.selectedHeader
+                          //     : this.widget.headers[index],
                           onTap: () => scrollTo(index),
                         );
-
-                        // return GestureDetector(
-                        //   child: Container(
-                        //     width: 100,
-                        //     decoration: BoxDecoration(
-                        //       border: snapshot == index
-                        //           ? Border.all(color: Colors.blueAccent)
-                        //           : null,
-                        //       color: this.widget.colors[index],
-                        //     ),
-                        //     child: Center(
-                        //       child: Text(
-                        //         "$index",
-                        //         style: TextStyle(
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        //   onTap: () {
-                        //     scrollTo(index);
-                        //   },
-                        // );
                       },
                     );
                   }),
