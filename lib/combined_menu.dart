@@ -98,48 +98,46 @@ class _CombinedMenuState extends State<CombinedMenu> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Iterable<ItemPosition>>(
       valueListenable: verticalItemPositionsListener.itemPositions,
-      child: Material(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: widget.headerHigth,
-              child: ValueListenableBuilder<int>(
-                  valueListenable: scrollableController.valueListenable,
-                  builder: (context, snapshot, child) {
-                    return HeaderList(
-                      controller: scrollableController,
-                      numberOfItems: widget.contents.length,
-                      itemPositionsListener: horizontalItemPositionsListener,
-                      itemScrollController: horizontalScrollController,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          child: Column(
-                            children: [
-                              widget.headers[index],
-                              if (index == snapshot) this.widget.selectedHeader,
-                            ],
-                          ),
-                          // child: index == snapshot
-                          //     ? this.widget.selectedHeader
-                          //     : this.widget.headers[index],
-                          onTap: () => scrollTo(index),
-                        );
-                      },
-                    );
-                  }),
-            ),
-            BodyList(
-              numberOfItems: widget.contents.length,
-              itemPositionsListener: verticalItemPositionsListener,
-              itemScrollController: verticalScrollController,
-              itemBuilder: (context, index) {
-                return widget.contents[index];
-              },
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: widget.headerHigth,
+            child: ValueListenableBuilder<int>(
+                valueListenable: scrollableController.valueListenable,
+                builder: (context, snapshot, child) {
+                  return HeaderList(
+                    controller: scrollableController,
+                    numberOfItems: widget.contents.length,
+                    itemPositionsListener: horizontalItemPositionsListener,
+                    itemScrollController: horizontalScrollController,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        child: Column(
+                          children: [
+                            widget.headers[index],
+                            if (index == snapshot) this.widget.selectedHeader,
+                          ],
+                        ),
+                        // child: index == snapshot
+                        //     ? this.widget.selectedHeader
+                        //     : this.widget.headers[index],
+                        onTap: () => scrollTo(index),
+                      );
+                    },
+                  );
+                }),
+          ),
+          BodyList(
+            numberOfItems: widget.contents.length,
+            itemPositionsListener: verticalItemPositionsListener,
+            itemScrollController: verticalScrollController,
+            itemBuilder: (context, index) {
+              return widget.contents[index];
+            },
+          ),
+        ],
       ),
       builder: (context, positions, child) {
         scrollableController.updatePositions(
