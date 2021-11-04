@@ -1,4 +1,8 @@
 
+## [0.0.10+1] 04 November 2021
+
+* Fix change log documentation
+
 ## [0.0.10] 04 November 2021
 
 * Remove initial Aligment
