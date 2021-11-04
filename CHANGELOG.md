@@ -1,5 +1,5 @@
 
-## [0.0.10+1] 04 November 2021
+## [0.0.10+2] 04 November 2021
 
 * Fix change log documentation
 
