@@ -43,4 +43,8 @@
 
 ## [0.0.9] 27 October 2021
 
-* Remove Material widget from root
+* Remove Material widget from root\
+
+## [0.0.10] 04 Novenber 2021
+
+* Remove initial Aligment

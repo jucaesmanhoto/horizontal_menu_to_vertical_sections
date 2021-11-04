@@ -210,7 +210,6 @@ class _BodyListState extends State<BodyList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ScrollablePositionedList.builder(
-        initialAlignment: 12,
         itemCount: widget.numberOfItems,
         itemScrollController: widget.itemScrollController,
         itemPositionsListener: widget.itemPositionsListener,
