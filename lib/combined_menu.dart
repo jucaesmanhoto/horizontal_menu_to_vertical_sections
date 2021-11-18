@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:horizontal_menu_to_vertical_sections/combined_item_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'scrollable_controller.dart';
@@ -9,20 +10,16 @@ const scrollDuration = Duration(seconds: 2);
 //A lista do cabeçalho e a lista widgets devem ter o mesmo tamanho
 
 class CombinedMenu extends StatefulWidget {
-  final List<Widget> headers;
-  final List<Widget> contents;
+  final List<CombinedItem> items;
+
   final double headerHigth;
   final Widget selectedHeader;
 
   const CombinedMenu({
     required this.headerHigth,
     required this.selectedHeader,
-    required this.headers,
-    required this.contents,
-  }) : assert(
-          headers.length == contents.length,
-          "The number of index needs to be the same of contents",
-        );
+    required this.items,
+  });
 
   @override
   _CombinedMenuState createState() => _CombinedMenuState();
@@ -96,6 +93,8 @@ class _CombinedMenuState extends State<CombinedMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final headers = widget.items.map((i) => i.header).toList();
+    final contents = widget.items.map((i) => i.body).toList();
     return ValueListenableBuilder<Iterable<ItemPosition>>(
       valueListenable: verticalItemPositionsListener.itemPositions,
       child: Column(
@@ -109,14 +108,14 @@ class _CombinedMenuState extends State<CombinedMenu> {
                 builder: (context, snapshot, child) {
                   return HeaderList(
                     controller: scrollableController,
-                    numberOfItems: widget.contents.length,
+                    numberOfItems: widget.items.length,
                     itemPositionsListener: horizontalItemPositionsListener,
                     itemScrollController: horizontalScrollController,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         child: Column(
                           children: [
-                            widget.headers[index],
+                            headers[index],
                             if (index == snapshot) this.widget.selectedHeader,
                           ],
                         ),
@@ -130,11 +129,11 @@ class _CombinedMenuState extends State<CombinedMenu> {
                 }),
           ),
           BodyList(
-            numberOfItems: widget.contents.length,
+            numberOfItems: contents.length,
             itemPositionsListener: verticalItemPositionsListener,
             itemScrollController: verticalScrollController,
             itemBuilder: (context, index) {
-              return widget.contents[index];
+              return contents[index];
             },
           ),
         ],

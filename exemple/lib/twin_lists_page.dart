@@ -8,8 +8,7 @@ class TwinListsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CombinedMenu(
-        contents: mockedContents,
-        headers: mockedHeaders,
+        items: items,
         selectedHeader: Container(
           padding: const EdgeInsets.only(left: 114.0),
           decoration: BoxDecoration(
