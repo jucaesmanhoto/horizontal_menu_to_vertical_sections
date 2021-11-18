@@ -18,16 +18,6 @@ class TwinListsPage extends StatelessWidget {
           ),
         ),
         headerHigth: kToolbarHeight,
-        // sections: mockedSections,
-        // height: MediaQuery.of(context).size.height - kToolbarHeight,
-        // width: MediaQuery.of(context).size.width,
-        // horizontalScrollDurationInMilliseconds: 100,
-        // verticalScrollDurationInMilliseconds: 300,
-        // baseLineColor: Colors.black26,
-        // inticatorColor: Colors.black,
-        // horizontalPadding: 16.0,
-        // indicatorWidthRelationFlex: 3,
-        // itemBaseLineWidthRelationFlex: 4,
       ),
     );
   }

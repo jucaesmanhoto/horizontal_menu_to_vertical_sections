@@ -4,18 +4,15 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'scrollable_controller.dart';
 
-const scrollDuration = Duration(seconds: 2);
-
-//Deve receber duas listas de widgets, uma lista de items do cabeçalhos e outra lista com os items do do corpo
-//A lista do cabeçalho e a lista widgets devem ter o mesmo tamanho
-
 class CombinedMenu extends StatefulWidget {
   final List<CombinedItem> items;
 
   final double headerHigth;
   final Widget selectedHeader;
+  final Duration scrollDuration;
 
   const CombinedMenu({
+    this.scrollDuration = const Duration(seconds: 2),
     required this.headerHigth,
     required this.selectedHeader,
     required this.items,
@@ -119,9 +116,6 @@ class _CombinedMenuState extends State<CombinedMenu> {
                             if (index == snapshot) this.widget.selectedHeader,
                           ],
                         ),
-                        // child: index == snapshot
-                        //     ? this.widget.selectedHeader
-                        //     : this.widget.headers[index],
                         onTap: () => scrollTo(index),
                       );
                     },
@@ -150,7 +144,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
 
   void scrollTo(int index) => verticalScrollController.scrollTo(
         index: index,
-        duration: scrollDuration,
+        duration: widget.scrollDuration,
         curve: Curves.easeInOutCubic,
       );
 }
