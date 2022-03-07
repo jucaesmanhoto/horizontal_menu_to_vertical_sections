@@ -171,6 +171,7 @@ class HeaderList extends StatelessWidget {
       child: ScrollablePositionedList.builder(
         itemCount: numberOfItems,
         scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
         itemScrollController: itemScrollController,
         itemPositionsListener: itemPositionsListener,
         physics: RangeMaintainingScrollPhysics(),
