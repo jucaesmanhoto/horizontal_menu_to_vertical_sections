@@ -116,7 +116,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
                             if (index == snapshot) this.widget.selectedHeader,
                           ],
                         ),
-                        onTap: () => jumpTo(index),
+                        onTap: () => scrollTo(index),
                       );
                     },
                   );
@@ -130,7 +130,10 @@ class _CombinedMenuState extends State<CombinedMenu> {
               return CustomScrollView(
                 shrinkWrap: true,
                 primary: false,
-                slivers: contents.toList(),
+                slivers: contents
+                    .map((e) =>
+                        SliverList(delegate: SliverChildListDelegate([e])))
+                    .toList(),
               );
               // return contents[index];
             },
