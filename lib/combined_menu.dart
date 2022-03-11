@@ -9,12 +9,14 @@ class CombinedMenu extends StatefulWidget {
 
   final double headerHigth;
   final Widget selectedHeader;
+  final Widget? baseLine;
   final Duration scrollDuration;
   final double? keepAlive;
 
   const CombinedMenu({
     this.scrollDuration = const Duration(seconds: 2),
     required this.headerHigth,
+    this.baseLine,
     required this.keepAlive,
     required this.selectedHeader,
     required this.items,
@@ -115,7 +117,13 @@ class _CombinedMenuState extends State<CombinedMenu> {
                         child: Column(
                           children: [
                             headers[index],
-                            if (index == snapshot) this.widget.selectedHeader,
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                if (widget.baseLine != null) widget.baseLine!,
+                                if (index == snapshot) widget.selectedHeader,
+                              ],
+                            )
                           ],
                         ),
                         onTap: () => scrollTo(index),
