@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CombinedItem {
   final Widget header;
-  final Widget body;
+  final SliverList body;
 
   CombinedItem({required this.header, required this.body});
 }

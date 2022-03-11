@@ -19,29 +19,37 @@ List<CombinedItem> items = List<CombinedItem>.generate(
   10,
   (index) {
     return CombinedItem(
-        header: SizedBox(
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: colors[index % colors.length],
-              ),
-              padding: const EdgeInsets.all(6.0),
-              child: Text('Item $index'),
+      header: SizedBox(
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: colors[index % colors.length],
             ),
+            padding: const EdgeInsets.all(6.0),
+            child: Text('Item $index'),
           ),
         ),
-        body: Container(
-          margin: const EdgeInsets.all(4.0),
-          height: 399,
-          decoration: BoxDecoration(
-            color: colors[index % colors.length],
-          ),
-          child: Text(
-            'Section $index',
-            style: TextStyle(color: Colors.black26),
-          ),
-        ));
+      ),
+      body: SliverList(
+        delegate: SliverChildListDelegate(
+          [
+            Container(
+              margin: const EdgeInsets.all(4.0),
+              height: 399,
+              decoration: BoxDecoration(
+                color: colors[index % colors.length],
+              ),
+              child: Text(
+                'Section $index',
+                style: TextStyle(color: Colors.black26),
+              ),
+            )
+          ],
+          addAutomaticKeepAlives: true,
+        ),
+      ),
+    );
   },
 );

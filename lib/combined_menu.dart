@@ -127,7 +127,12 @@ class _CombinedMenuState extends State<CombinedMenu> {
             itemPositionsListener: verticalItemPositionsListener,
             itemScrollController: verticalScrollController,
             itemBuilder: (context, index) {
-              return contents[index];
+              return CustomScrollView(
+                shrinkWrap: true,
+                primary: false,
+                slivers: contents.toList(),
+              );
+              // return contents[index];
             },
           ),
         ],
