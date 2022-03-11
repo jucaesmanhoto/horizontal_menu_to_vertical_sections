@@ -116,7 +116,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
                             if (index == snapshot) this.widget.selectedHeader,
                           ],
                         ),
-                        onTap: () => scrollTo(index),
+                        onTap: () => jumpTo(index),
                       );
                     },
                   );
@@ -151,6 +151,9 @@ class _CombinedMenuState extends State<CombinedMenu> {
         index: index,
         duration: widget.scrollDuration,
         curve: Curves.easeInOutCubic,
+      );
+  void jumpTo(int index) => verticalScrollController.jumpTo(
+        index: index,
       );
 }
 
