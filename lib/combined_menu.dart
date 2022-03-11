@@ -10,10 +10,12 @@ class CombinedMenu extends StatefulWidget {
   final double headerHigth;
   final Widget selectedHeader;
   final Duration scrollDuration;
+  final double? keepAlive;
 
   const CombinedMenu({
     this.scrollDuration = const Duration(seconds: 2),
     required this.headerHigth,
+    required this.keepAlive,
     required this.selectedHeader,
     required this.items,
   });
@@ -126,6 +128,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
             numberOfItems: contents.length,
             itemPositionsListener: verticalItemPositionsListener,
             itemScrollController: verticalScrollController,
+            keepAlive: widget.keepAlive,
             itemBuilder: (context, index) {
               return CustomScrollView(
                   shrinkWrap: true,
@@ -200,10 +203,12 @@ class BodyList extends StatefulWidget {
   final ItemScrollController itemScrollController;
   final ItemPositionsListener itemPositionsListener;
   final int numberOfItems;
+  final double? keepAlive;
 
   const BodyList({
     Key? key,
     required this.itemBuilder,
+    this.keepAlive = 10,
     required this.numberOfItems,
     required this.itemScrollController,
     required this.itemPositionsListener,
@@ -219,7 +224,7 @@ class _BodyListState extends State<BodyList> {
     return Expanded(
       child: ScrollablePositionedList.builder(
         addAutomaticKeepAlives: true,
-        minCacheExtent: double.infinity,
+        minCacheExtent: widget.keepAlive,
         itemCount: widget.numberOfItems,
         itemScrollController: widget.itemScrollController,
         itemPositionsListener: widget.itemPositionsListener,

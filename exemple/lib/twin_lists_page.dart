@@ -9,6 +9,7 @@ class TwinListsPage extends StatelessWidget {
     return Scaffold(
       body: CombinedMenu(
         items: items,
+        keepAlive: double.maxFinite,
         selectedHeader: Container(
           padding: const EdgeInsets.only(left: 114.0),
           decoration: BoxDecoration(
