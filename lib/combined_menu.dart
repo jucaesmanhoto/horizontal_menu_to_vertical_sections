@@ -128,13 +128,16 @@ class _CombinedMenuState extends State<CombinedMenu> {
             itemScrollController: verticalScrollController,
             itemBuilder: (context, index) {
               return CustomScrollView(
-                shrinkWrap: true,
-                primary: false,
-                slivers: contents
-                    .map((e) =>
-                        SliverList(delegate: SliverChildListDelegate([e])))
-                    .toList(),
-              );
+                  shrinkWrap: true,
+                  primary: false,
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [contents[index]],
+                        addAutomaticKeepAlives: true,
+                      ),
+                    )
+                  ]);
               // return contents[index];
             },
           ),
@@ -215,6 +218,8 @@ class _BodyListState extends State<BodyList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ScrollablePositionedList.builder(
+        addAutomaticKeepAlives: true,
+        minCacheExtent: double.infinity,
         itemCount: widget.numberOfItems,
         itemScrollController: widget.itemScrollController,
         itemPositionsListener: widget.itemPositionsListener,
