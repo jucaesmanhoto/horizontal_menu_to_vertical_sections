@@ -142,11 +142,8 @@ class _CombinedMenuState extends State<CombinedMenu> {
                   shrinkWrap: true,
                   primary: false,
                   slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [contents[index]],
-                        addAutomaticKeepAlives: true,
-                      ),
+                    SliverToBoxAdapter(
+                      child: contents[index],
                     )
                   ]);
               // return contents[index];
@@ -216,7 +213,7 @@ class BodyList extends StatefulWidget {
   const BodyList({
     Key? key,
     required this.itemBuilder,
-    this.keepAlive = 10,
+    this.keepAlive,
     required this.numberOfItems,
     required this.itemScrollController,
     required this.itemPositionsListener,
