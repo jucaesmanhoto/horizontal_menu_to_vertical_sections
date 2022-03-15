@@ -107,28 +107,30 @@ class _CombinedMenuState extends State<CombinedMenu> {
             child: ValueListenableBuilder<int>(
                 valueListenable: scrollableController.valueListenable,
                 builder: (context, snapshot, child) {
-                  return HeaderList(
-                    controller: scrollableController,
-                    numberOfItems: widget.items.length,
-                    itemPositionsListener: horizontalItemPositionsListener,
-                    itemScrollController: horizontalScrollController,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        child: Column(
-                          children: [
-                            headers[index],
-                            Stack(
-                              alignment: Alignment.center,
+                  return Stack(
+                    children: [
+                      HeaderList(
+                        controller: scrollableController,
+                        numberOfItems: widget.items.length,
+                        itemPositionsListener: horizontalItemPositionsListener,
+                        itemScrollController: horizontalScrollController,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            child: Column(
                               children: [
-                                if (widget.baseLine != null) widget.baseLine!,
+                                headers[index],
                                 if (index == snapshot) widget.selectedHeader,
                               ],
-                            )
-                          ],
-                        ),
-                        onTap: () => scrollTo(index),
-                      );
-                    },
+                            ),
+                            onTap: () => scrollTo(index),
+                          );
+                        },
+                      ),
+                      if (widget.baseLine != null)
+                        Align(
+                            child: widget.baseLine!,
+                            alignment: AlignmentDirectional.bottomEnd),
+                    ],
                   );
                 }),
           ),
