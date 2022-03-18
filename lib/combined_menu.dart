@@ -8,6 +8,7 @@ class CombinedMenu extends StatefulWidget {
   final List<CombinedItem> items;
 
   final double headerHigth;
+  final EdgeInsets? headerPadding;
   final Widget selectedHeader;
   final Widget? baseLine;
   final Duration scrollDuration;
@@ -18,6 +19,7 @@ class CombinedMenu extends StatefulWidget {
     this.scrollDuration = const Duration(seconds: 2),
     required this.verticalScrollController,
     required this.headerHigth,
+    this.headerPadding,
     this.baseLine,
     required this.keepAlive,
     required this.selectedHeader,
@@ -110,22 +112,26 @@ class _CombinedMenuState extends State<CombinedMenu> {
                 builder: (context, snapshot, child) {
                   return Stack(
                     children: [
-                      HeaderList(
-                        controller: scrollableController,
-                        numberOfItems: widget.items.length,
-                        itemPositionsListener: horizontalItemPositionsListener,
-                        itemScrollController: horizontalScrollController,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            child: Column(
-                              children: [
-                                headers[index],
-                                if (index == snapshot) widget.selectedHeader,
-                              ],
-                            ),
-                            onTap: () => scrollTo(index),
-                          );
-                        },
+                      Container(
+                        padding: widget.headerPadding,
+                        child: HeaderList(
+                          controller: scrollableController,
+                          numberOfItems: widget.items.length,
+                          itemPositionsListener:
+                              horizontalItemPositionsListener,
+                          itemScrollController: horizontalScrollController,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              child: Column(
+                                children: [
+                                  headers[index],
+                                  if (index == snapshot) widget.selectedHeader,
+                                ],
+                              ),
+                              onTap: () => scrollTo(index),
+                            );
+                          },
+                        ),
                       ),
                       if (widget.baseLine != null)
                         Align(

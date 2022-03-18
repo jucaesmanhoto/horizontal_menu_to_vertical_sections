@@ -10,6 +10,11 @@ class TwinListsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CombinedMenu(
+        headerPadding: EdgeInsets.only(left: 12),
+        baseLine: Container(
+          height: 1,
+          color: Colors.grey,
+        ),
         verticalScrollController: verticalScrollController,
         items: items,
         keepAlive: double.maxFinite,
