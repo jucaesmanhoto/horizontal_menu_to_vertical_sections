@@ -4,10 +4,13 @@ import 'package:horizontal_menu_to_vertical_sections/horizontal_menu_to_vertical
 import 'mocked_data.dart';
 
 class TwinListsPage extends StatelessWidget {
+  final ItemController verticalScrollController = ItemController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CombinedMenu(
+        verticalScrollController: verticalScrollController,
         items: items,
         keepAlive: double.maxFinite,
         selectedHeader: Container(

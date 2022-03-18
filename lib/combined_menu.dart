@@ -12,9 +12,11 @@ class CombinedMenu extends StatefulWidget {
   final Widget? baseLine;
   final Duration scrollDuration;
   final double? keepAlive;
+  final ItemScrollController verticalScrollController;
 
   const CombinedMenu({
     this.scrollDuration = const Duration(seconds: 2),
+    required this.verticalScrollController,
     required this.headerHigth,
     this.baseLine,
     required this.keepAlive,
@@ -32,7 +34,6 @@ class _CombinedMenuState extends State<CombinedMenu> {
   final rowScrollController = ScrollController();
 
   /// Controller to scroll or jump to a particular item.
-  final ItemScrollController verticalScrollController = ItemScrollController();
   final ItemScrollController horizontalScrollController =
       ItemScrollController();
 
@@ -137,7 +138,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
           BodyList(
             numberOfItems: contents.length,
             itemPositionsListener: verticalItemPositionsListener,
-            itemScrollController: verticalScrollController,
+            itemScrollController: widget.verticalScrollController,
             keepAlive: widget.keepAlive,
             itemBuilder: (context, index) {
               return CustomScrollView(
@@ -163,12 +164,12 @@ class _CombinedMenuState extends State<CombinedMenu> {
     );
   }
 
-  void scrollTo(int index) => verticalScrollController.scrollTo(
+  void scrollTo(int index) => widget.verticalScrollController.scrollTo(
         index: index,
         duration: widget.scrollDuration,
         curve: Curves.easeInOutCubic,
       );
-  void jumpTo(int index) => verticalScrollController.jumpTo(
+  void jumpTo(int index) => widget.verticalScrollController.jumpTo(
         index: index,
       );
 }
