@@ -98,6 +98,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
   @override
   Widget build(BuildContext context) {
     final headers = widget.items.map((i) => i.header).toList();
+    final selectedHeaders = widget.items.map((i) => i.headerSelected).toList();
     final contents = widget.items.map((i) => i.body).toList();
     return ValueListenableBuilder<Iterable<ItemPosition>>(
       valueListenable: verticalItemPositionsListener.itemPositions,
@@ -111,6 +112,7 @@ class _CombinedMenuState extends State<CombinedMenu> {
                 valueListenable: scrollableController.valueListenable,
                 builder: (context, snapshot, child) {
                   return Stack(
+                    alignment: Alignment.center,
                     children: [
                       Container(
                         padding: widget.headerPadding,
@@ -124,7 +126,10 @@ class _CombinedMenuState extends State<CombinedMenu> {
                             return GestureDetector(
                               child: Column(
                                 children: [
-                                  headers[index],
+                                  if (index == snapshot)
+                                    selectedHeaders[index] ?? headers[index]
+                                  else
+                                    headers[index],
                                   if (index == snapshot) widget.selectedHeader,
                                 ],
                               ),
