@@ -1,4 +1,8 @@
 
+## [1.0.0] 22 Mar 2022
+
+* Remove necessity to use globalKeys
+
 ## [0.0.10+2] 04 November 2021
 
 * Fix change log documentation
@@ -9,7 +13,7 @@
 
 ## [0.0.9] 27 October 2021
 
-* Remove Material widget from root\
+* Remove Material widget from root
 
 ## [0.0.8] 27 October 2021
 
