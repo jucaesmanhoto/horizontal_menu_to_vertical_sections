@@ -1,4 +1,8 @@
 
+## [1.1.0] 22 Mar 2022
+
+* Update dependencies versions
+
 ## [1.0.0] 22 Mar 2022
 
 * Remove necessity to use globalKeys
