@@ -1,3 +1,6 @@
+# [1.2.0] 16 FEV 2022
+
+* Update dependencies versions
 
 ## [1.1.0] 22 Mar 2022
 
